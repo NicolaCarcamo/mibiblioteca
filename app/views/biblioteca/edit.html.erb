@@ -1,0 +1,18 @@
+<h1>Editando estanteria</h1>
+
+<%= form_with(model: @biblioteca, local: true) do |form| %>
+    <div class="field">
+        <%= label_tag(:estado, "Estado") %>
+        <%= form.select :estado, [["En estante", "en_estante"], ["Prestado", "prestado"]] %>
+    </div>
+    <div class="field">
+        <%= form.label :description %>
+        <%= form.text_field :description %>
+    </div>
+    <div class="actions">
+        <%= form.submit %>
+    </div>
+<% end %>
+
+<%= link_to 'Show', @post %> |
+<%= link_to 'Back', posts_path %>

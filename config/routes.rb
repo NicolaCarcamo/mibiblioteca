@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  post 'biblioteca', to: 'biblioteca#index'
+  resources :biblioteca
   root 'biblioteca#index'
 end
