@@ -1,0 +1,35 @@
+<%= form_with model: @biblioteca do |form| %>
+    <%= token_tag %>
+
+    <div class="field py-2">
+        <%= label_tag(:titulo, "Título") %>
+        <%= text_field_tag(:titulo) %>
+    </div>
+
+    <div class="field pb-2">
+        <%= label_tag(:autor, "Autor") %>
+        <%= text_field_tag(:autor) %>
+    </div>
+
+    <div class="field pb-2">
+        <%= label_tag(:estado, "Estado") %>
+        <select name="estado" id="estado">
+            <option value="en_estante">En estante</option>
+            <option value="prestado">Prestado</option>
+        </select>
+    </div>
+         
+    <div class="field pb-2">
+        <%= label_tag(:fechaprestamo, "Fecha de préstamo") %>
+        <%= text_field_tag(:fechaprestamo) %>
+    </div>
+
+    <div class="field pb-2">
+        <%= label_tag(:fechadevolucion, "Fecha de devolución") %>
+        <%= text_field_tag(:fechadevolucion) %>
+    </div>
+
+    <div class="actions">
+        <%= form.submit "Guardar", class: "btn btn-primary" %>
+    </div>
+<% end %>

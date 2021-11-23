@@ -1,38 +1,45 @@
 class BibliotecaController < ApplicationController
     skip_before_action :verify_authenticity_token, on: [:index]
+    before_action :set_biblioteca, only: [:show, :edit, :update]
 
     def index
-        @libros = Biblioteca.all
+        if params[:estado] == "order"
+            @bibliotecas = Biblioteca.order('titulo ASC')
+        elsif params[:estado].present?
+            @bibliotecas = Biblioteca.where('estado = ?', params[:estado])
+        else
+            @bibliotecas = Biblioteca.all
+        end
     end
 
     def create
-        @libro = Biblioteca.new(titulo: params[:titulo], autor: params[:autor], estado: params[:estado], fechaprestamo: params[:fechaprestamo], fechadevolucion: params[:fechadevolucion])
+        @biblioteca = Biblioteca.new(biblioteca_params)
 
-        if @libro.save
-            redirect_to '/', notice: "Libro guardado de forma exitosa"
+        if @biblioteca.save
+            redirect_to '/', notice: "Libro guardado de forma éxitosa"
         else
-            redirect_to '/'
+            redirect_to '/', notice: "El libro no se pudo guardar"
         end
     end
 
-    def show
-        @libro = Libro.find_by(params[:titulo])
-
-        if params[:estado].present?
-            @libros = Biblioteca.where('estado = ?', params[:estado])
-        elsif params[:titulo].present?
-            render 'show_titulo'
-        else
-            render 'show_default'
-        end
-
+    def edit
     end
-
+    
     def update
-        if @libro.update(params)
-            redirect_to '/', notice: "Libro actualizado exitosamente."
+        if @biblioteca.update(biblioteca_params)
+            redirect_to '/', notice: "Libro actualizado éxitosamente"
         else
+            flash.now[:notice] = 'El libro no pudo ser actualizado'
             render :edit
         end
     end
+
+    def biblioteca_params
+        params.permit(:id, :titulo, :autor, :estado, :fechaprestamo, :fechadevolucion)
+    end
+
+    private
+        def set_biblioteca
+            @biblioteca = Biblioteca.find(params[:id])
+        end
 end

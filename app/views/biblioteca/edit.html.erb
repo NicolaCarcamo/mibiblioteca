@@ -1,18 +1,11 @@
-<h1>Editando estanteria</h1>
+<h1 class="text-center py-5">Editando estanteria</h1>
 
-<%= form_with(model: @biblioteca, local: true) do |form| %>
-    <div class="field">
-        <%= label_tag(:estado, "Estado") %>
-        <%= form.select :estado, [["En estante", "en_estante"], ["Prestado", "prestado"]] %>
-    </div>
-    <div class="field">
-        <%= form.label :description %>
-        <%= form.text_field :description %>
-    </div>
-    <div class="actions">
-        <%= form.submit %>
-    </div>
-<% end %>
+<div class="text-center pb-5">
+    <%= render 'form', post: @biblioteca %>
+</div>
 
-<%= link_to 'Show', @post %> |
-<%= link_to 'Back', posts_path %>
+<p class="text-center fw-bold text-danger" id="notice"><%= notice %></p>
+
+<div class="text-center">
+    <%= link_to 'Página principal', '/' %>
+</div>

@@ -4,12 +4,12 @@
         <a class="navbar-brand ps-5">Mi Biblioteca</a>
         <form class="form-inline me-5">
             <select name="estado" class="form-select mb-1" aria-label="Default select example">
-                <option value="" selected>Abre este menu</option>
-                <option value="propuesta">Propuesta</option>
-                <option value="en_progreso">En progreso</option>
-                <option value="terminado">Terminado</option>
+                <option value="" selected>Buscar</option>
+                <option value="order">Ordenar alfabéticamente</option>
+                <option value="en_estante">En estante</option>
+                <option value="prestado">Prestado</option>
             </select>
-        <button class="btn btn-outline-light my-3 my-sm-0" type="submit">Buscar</button>
+            <button class="btn btn-outline-light my-3 my-sm-0" type="submit">Buscar</button>
         </form>
     </nav>
 
@@ -22,13 +22,14 @@
                 <th scope="col">Fecha de préstamo</th>
                 <th scope="col">Fecha de devolución</th>
             </tr>
-            <% @libros.each do |libro| %>
+            <% @bibliotecas.each do |biblioteca| %>
                 <tr>
-                    <td><%= libro.titulo %></td>
-                    <td><%= libro.autor %></td>
-                    <td><%= libro.estado %></td>
-                    <td><%= libro.fechaprestamo %></td>
-                    <td><%= libro.fechadevolucion %></td>
+                    <td><%= biblioteca.titulo %></td>
+                    <td><%= biblioteca.autor %></td>
+                    <td><%= biblioteca.estado %></td>
+                    <td><%= biblioteca.fechaprestamo %></td>
+                    <td><%= biblioteca.fechadevolucion %></td>
+                    <td><%= link_to 'Editar', edit_biblioteca_path(biblioteca.id) %></td>
                 </tr>
             <% end %>
         </table>
@@ -36,40 +37,11 @@
 </div>
 
 <!-- MENSAJE DE LIBRO GUARDADO -->
-<p class="text-center" id="notice"><%= notice %></p>
+<p class="text-center fw-bold text-primary" id="notice"><%= notice %></p>
 
 <!-- FORM CREAR LIBROS -->
-<div class="text-center">
-    <%= form_with model: @biblioteca do |form| %>
-        <%= token_tag %>
+<div class="text-center pb-5">
+    <h2>Crear libro</h2>
 
-        <div class="field py-2">
-            <%= label_tag(:titulo, "Título") %>
-            <%= text_field_tag(:titulo) %>
-        </div>
-
-        <div class="field pb-2">
-            <%= label_tag(:autor, "Autor") %>
-            <%= text_field_tag(:autor) %>
-        </div>
-
-        <div class="field pb-2">
-            <%= label_tag(:estado, "Estado") %>
-            <%= form.select :estado, [["En estante", "en_estante"], ["Prestado", "prestado"]] %>
-        </div>
-         
-        <div class="field pb-2">
-            <%= label_tag(:fechaprestamo, "Fecha de préstamo") %>
-            <%= text_field_tag(:fechaprestamo) %>
-        </div>
-
-        <div class="field pb-2">
-            <%= label_tag(:fechadevolucion, "Fecha de devolución") %>
-            <%= text_field_tag(:fechadevolucion) %>
-        </div>
-
-        <div class="actions">
-            <%= form.submit %>
-        </div>
-    <% end %>
+    <%= render 'form', post: @biblioteca %>
 </div>
